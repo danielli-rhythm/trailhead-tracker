@@ -11,7 +11,7 @@ trails, and superbadges. Single-user, browser-based, deployed to AWS via
 The authoritative feature list and entity shape lives at:
 
 ```
-/Users/Daniel.Li/Documents/trailhead-tracker/docs/TRAILHEAD_TODOS.md
+docs/TRAILHEAD_TODOS.md
 ```
 
 **Read that file before generating any code.** If it conflicts with anything in

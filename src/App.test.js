@@ -1,8 +1,12 @@
 import { render, screen } from '@testing-library/react';
+import TrailheadProvider from './context/TrailheadContext';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders app heading', () => {
+  render(
+    <TrailheadProvider>
+      <App />
+    </TrailheadProvider>
+  );
+  expect(screen.getByText(/trailhead tracker/i)).toBeInTheDocument();
 });
