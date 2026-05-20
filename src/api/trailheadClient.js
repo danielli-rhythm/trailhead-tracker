@@ -1,5 +1,5 @@
 // Swappable data layer boundary.
-// Phase 1: localStorage adapter. Phase 2: swap import to httpAdapter.
-import { localStorageAdapter } from './localStorageAdapter';
+// Phase 1: localStorage adapter. Phase 2: HTTP adapter pointing at API Gateway.
+import { httpAdapter } from './httpAdapter';
 
-export const trailheadClient = localStorageAdapter;
+export const trailheadClient = httpAdapter;
