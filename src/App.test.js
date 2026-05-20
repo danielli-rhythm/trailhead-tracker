@@ -2,11 +2,12 @@ import { render, screen } from '@testing-library/react';
 import TrailheadProvider from './context/TrailheadContext';
 import App from './App';
 
-test('renders app heading', () => {
+test('renders nav links', () => {
   render(
     <TrailheadProvider>
       <App />
     </TrailheadProvider>
   );
-  expect(screen.getByText(/trailhead tracker/i)).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Home' })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'New Item' })).toBeInTheDocument();
 });
