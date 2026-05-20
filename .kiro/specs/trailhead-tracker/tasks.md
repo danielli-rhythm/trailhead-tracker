@@ -105,14 +105,69 @@ Note any conflicts you resolved in your task summary.
 
 ---
 
-## Task 9 — Error handling and polish
+## Task 9 — Error handling, design pass, and polish
+
+This task has two halves. Do error handling first (small), then the design pass (the bulk of the task).
+
+### Part A: Error handling
 
 - [ ] Build `ErrorBanner.jsx`, wire to context error state, dismissible
-- [ ] Add basic responsive styles in `styles/global.css` (mobile-first)
-- [ ] Make sure there are no console warnings (key props, controlled inputs, etc.)
+- [ ] Verify all `trailheadClient` calls are wrapped in try/catch at dispatch sites
+- [ ] Manually trigger an error (corrupt localStorage with `localStorage.setItem('trailhead_items_v1', 'not json')` and refresh) — confirm the banner appears with a useful message instead of a white-screen crash
+
+### Part B: Design pass — make it look modern
+
+The current UI is functional but visually plain. Bring it up to a modern personal-app aesthetic. Reference points: Linear, Vercel dashboard, Things 3 — clean, opinionated, generous whitespace, restrained color palette with strong accent usage.
+
+**Constraints (do not violate):**
+- No UI framework (no Tailwind, no MUI, no shadcn). Plain CSS only — this is locked in `tech-stack.md`.
+- No new dependencies.
+- All styles in `src/styles/global.css` and existing per-component CSS. Don't introduce CSS-in-JS.
+- The data, behavior, and component structure must not change. This is a pure styling task.
+
+**Design system to establish in global.css:**
+
+- [ ] CSS custom properties at `:root` for the full design system:
+  - **Color palette:** `--bg`, `--bg-elevated`, `--text-primary`, `--text-secondary`, `--text-muted`, `--border`, `--accent`, `--accent-hover`, status colors (`--status-not-started`, `--status-in-progress`, `--status-completed`)
+  - **Typography:** `--font-sans` (system font stack), `--font-mono`, type scale variables (`--text-xs` through `--text-2xl`)
+  - **Spacing scale:** `--space-1` through `--space-8` (4px / 8px / 12px / 16px / 24px / 32px / 48px / 64px)
+  - **Radius:** `--radius-sm`, `--radius-md`, `--radius-lg`
+  - **Shadows:** `--shadow-sm`, `--shadow-md` (subtle, not Material-y)
+- [ ] Implement light theme by default with a `prefers-color-scheme: dark` media query for dark mode
+- [ ] Set base body styles: font, line-height, antialiasing, background
+
+**Component-level work:**
+
+- [ ] **Top nav** — clean header with the app name on the left, "New Item" as a prominent button on the right (not just a link)
+- [ ] **Dashboard cards** — the count tiles should be actual cards with whitespace, subtle borders or shadows, large numbers, small labels. Completion percentage gets a thin progress bar.
+- [ ] **Item list** — drop the table layout if it exists, use a list of cards or rows with proper hover states. Each row shows name prominently, secondary info (type, priority) in muted text, status badge on the right.
+- [ ] **Status badges** — pill-shaped, with a subtle background tint matching status color (not just solid colored boxes)
+- [ ] **Buttons** — distinct primary/secondary/danger styles. Real hover states (background shift, not just color). Focus rings for keyboard users (`:focus-visible`).
+- [ ] **Forms** — inputs with consistent height, subtle borders, focus state with accent color. Labels above inputs (not inline). Generous padding.
+- [ ] **Confirm dialog** — proper modal overlay with backdrop blur or dim, centered card, clear button hierarchy (danger action + cancel)
+- [ ] **Empty states** — when the list is empty, show a friendly message ("No Trailhead items yet — add your first one") instead of blank space
+
+**Responsive (mobile-first):**
+
+- [ ] Layouts should work down to 320px width without horizontal scroll
+- [ ] Nav collapses gracefully on narrow widths
+- [ ] Dashboard cards stack on mobile, side-by-side on desktop
+- [ ] Form inputs full-width on mobile
+- [ ] Tap targets at least 44×44px
+
+**Polish details:**
+
+- [ ] No console warnings (key props, controlled inputs, etc.)
+- [ ] Subtle transitions on hover (`transition: all 150ms ease`) — keep it tasteful, not animated for animation's sake
 - [ ] Run `npm run build` and `npx serve build` — confirm the production build works
 
-**Verify:** Both `npm start` and `npx serve build` work cleanly. Resize browser to mobile width and confirm layout holds.
+**Verify:**
+
+1. Show me a screenshot of the home page with seeded data at desktop width
+2. Show me a screenshot at mobile width (375px)
+3. Show me the new item form
+4. Show me the confirm dialog open
+5. Both `npm start` and `npx serve build` work cleanly with no console warnings
 
 ---
 
