@@ -1,3 +1,10 @@
+/* === Base / Mobile-first === */
+
+* {
+  box-sizing: border-box;
+}
+
+/* Nav */
 .nav-header {
   display: flex;
   gap: 1rem;
@@ -12,47 +19,92 @@
   font-weight: 500;
 }
 
+/* Error Banner */
+.error-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: #fef2f2;
+  border-bottom: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.error-banner button {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #991b1b;
+  padding: 0 0.25rem;
+}
+
+/* Main */
 main {
   padding: 1rem;
   max-width: 960px;
   margin: 0 auto;
 }
 
-.status-badge {
-  display: inline-block;
-  padding: 0.2em 0.6em;
-  border-radius: 4px;
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: 500;
+/* Dashboard */
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
 }
 
-.item-list-controls {
+.dashboard-stat {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+  flex-direction: column;
   align-items: center;
 }
 
+.dashboard-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.dashboard-label {
+  font-size: 0.7rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Item List Controls */
+.item-list-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
 .item-list-controls input {
-  padding: 0.4rem 0.6rem;
+  padding: 0.5rem 0.75rem;
   border: 1px solid #d1d5db;
   border-radius: 4px;
-  min-width: 200px;
+  width: 100%;
+  font-size: 1rem;
 }
 
 .status-filters {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.25rem;
 }
 
 .status-filters button {
-  padding: 0.4rem 0.75rem;
+  padding: 0.4rem 0.6rem;
   border: 1px solid #d1d5db;
   border-radius: 4px;
   background: #fff;
   cursor: pointer;
+  font-size: 0.85rem;
 }
 
 .status-filters button.active {
@@ -61,15 +113,17 @@ main {
   border-color: #2563eb;
 }
 
+/* Item Table */
 .item-table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 0.9rem;
 }
 
 .item-table th,
 .item-table td {
   text-align: left;
-  padding: 0.5rem;
+  padding: 0.5rem 0.4rem;
   border-bottom: 1px solid #e5e7eb;
 }
 
@@ -78,11 +132,22 @@ main {
   background: #f9fafb;
 }
 
+/* Status Badge */
+.status-badge {
+  display: inline-block;
+  padding: 0.2em 0.5em;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Form */
 .item-form {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  max-width: 500px;
 }
 
 .item-form label {
@@ -96,23 +161,24 @@ main {
 .item-form input,
 .item-form select,
 .item-form textarea {
-  padding: 0.4rem 0.6rem;
+  padding: 0.5rem 0.75rem;
   border: 1px solid #d1d5db;
   border-radius: 4px;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .item-form button[type="submit"] {
-  padding: 0.5rem 1.25rem;
+  padding: 0.6rem 1.25rem;
   background: #2563eb;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1rem;
   align-self: flex-start;
 }
 
+/* Modal */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -121,13 +187,15 @@ main {
   align-items: center;
   justify-content: center;
   z-index: 100;
+  padding: 1rem;
 }
 
 .modal {
   background: #fff;
   padding: 1.5rem;
   border-radius: 8px;
-  min-width: 280px;
+  width: 100%;
+  max-width: 320px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -137,6 +205,7 @@ main {
   margin-top: 1rem;
 }
 
+/* Buttons */
 .btn-danger,
 .btn-danger-sm {
   background: #dc2626;
@@ -153,4 +222,25 @@ main {
 .btn-danger-sm {
   padding: 0.25rem 0.5rem;
   font-size: 0.8rem;
+}
+
+/* === Desktop (≥640px) === */
+@media (min-width: 640px) {
+  .item-list-controls {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .item-list-controls input {
+    width: auto;
+    min-width: 220px;
+  }
+
+  .item-form {
+    max-width: 500px;
+  }
+
+  .dashboard {
+    gap: 1.5rem;
+  }
 }
