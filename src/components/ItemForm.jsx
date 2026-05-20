@@ -115,7 +115,7 @@ export default function ItemForm({ initialValues, onSubmit, submitLabel = 'Save'
         <textarea name="notes" value={values.notes} onChange={handleChange} rows={3} />
       </label>
 
-      <button type="submit">{submitLabel}</button>
+      <button type="submit" className="btn-primary">{submitLabel}</button>
     </form>
   );
 }

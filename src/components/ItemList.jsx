@@ -1,6 +1,8 @@
 import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { useTrailhead } from '../hooks/useTrailhead';
 import ItemRow from './ItemRow';
+import { Inbox, Plus } from './Icon';
 
 const STATUSES = ['all', 'not_started', 'in_progress', 'completed'];
 const LABELS = { all: 'All', not_started: 'Not Started', in_progress: 'In Progress', completed: 'Completed' };
@@ -43,24 +45,18 @@ export default function ItemList() {
         </div>
       </div>
       {filtered.length === 0 ? (
-        <p>No items found.</p>
+        <div className="empty-state">
+          <Inbox size={48} className="empty-state-icon" />
+          <h3>No items yet</h3>
+          <p>Add your first Trailhead module to start tracking progress.</p>
+          <Link to="/new" className="btn-primary"><Plus size={14} /> Add Item</Link>
+        </div>
       ) : (
-        <table className="item-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Type</th>
-              <th>Status</th>
-              <th>Priority</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((item) => (
-              <ItemRow key={item.id} item={item} />
-            ))}
-          </tbody>
-        </table>
+        <div className="item-cards">
+          {filtered.map((item) => (
+            <ItemRow key={item.id} item={item} />
+          ))}
+        </div>
       )}
     </div>
   );

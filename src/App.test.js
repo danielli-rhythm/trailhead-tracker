@@ -8,6 +8,6 @@ test('renders nav links', () => {
       <App />
     </TrailheadProvider>
   );
-  expect(screen.getByRole('link', { name: 'Home' })).toBeInTheDocument();
-  expect(screen.getByRole('link', { name: 'New Item' })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /Trailhead Tracker/i })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /New Item/i })).toBeInTheDocument();
 });

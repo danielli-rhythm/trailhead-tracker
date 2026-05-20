@@ -1,9 +1,3 @@
-const COLORS = {
-  not_started: '#6b7280',
-  in_progress: '#2563eb',
-  completed: '#16a34a',
-};
-
 const LABELS = {
   not_started: 'Not Started',
   in_progress: 'In Progress',
@@ -12,10 +6,7 @@ const LABELS = {
 
 export default function StatusBadge({ status }) {
   return (
-    <span
-      className="status-badge"
-      style={{ backgroundColor: COLORS[status] || '#6b7280' }}
-    >
+    <span className={`status-badge status-badge--${status}`}>
       {LABELS[status] || status}
     </span>
   );

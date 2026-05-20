@@ -52,7 +52,7 @@ export default function EditItemPage() {
 
   return (
     <div>
-      <h2>Edit Item</h2>
+      <h2 className="page-heading">Edit Item</h2>
       <ItemForm initialValues={initialValues} onSubmit={handleSubmit} submitLabel="Update" />
     </div>
   );

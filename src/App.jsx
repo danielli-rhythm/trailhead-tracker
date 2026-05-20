@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import ErrorBanner from './components/ErrorBanner';
+import { Mountain, Plus } from './components/Icon';
 import HomePage from './pages/HomePage';
 import NewItemPage from './pages/NewItemPage';
 import EditItemPage from './pages/EditItemPage';
@@ -9,8 +10,10 @@ function App() {
   return (
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <nav className="nav-header">
-        <Link to="/">Home</Link>
-        <Link to="/new">New Item</Link>
+        <Link to="/" className="nav-logo">
+          <Mountain size={18} /> Trailhead Tracker
+        </Link>
+        <Link to="/new"><Plus size={14} /> New Item</Link>
       </nav>
       <ErrorBanner />
       <main>

@@ -1,4 +1,5 @@
 import { useTrailhead } from '../hooks/useTrailhead';
+import { Circle, Clock, Check } from './Icon';
 
 export default function Dashboard() {
   const { state } = useTrailhead();
@@ -11,23 +12,26 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard">
-      <div className="dashboard-stat">
+      <div className="dashboard-card">
         <span className="dashboard-value">{total}</span>
         <span className="dashboard-label">Total</span>
       </div>
-      <div className="dashboard-stat">
-        <span className="dashboard-value" style={{ color: '#6b7280' }}>{notStarted}</span>
+      <div className="dashboard-card">
+        <Circle size={18} className="dashboard-icon" />
+        <span className="dashboard-value">{notStarted}</span>
         <span className="dashboard-label">Not Started</span>
       </div>
-      <div className="dashboard-stat">
-        <span className="dashboard-value" style={{ color: '#2563eb' }}>{inProgress}</span>
+      <div className="dashboard-card">
+        <Clock size={18} className="dashboard-icon" />
+        <span className="dashboard-value">{inProgress}</span>
         <span className="dashboard-label">In Progress</span>
       </div>
-      <div className="dashboard-stat">
-        <span className="dashboard-value" style={{ color: '#16a34a' }}>{completed}</span>
+      <div className="dashboard-card">
+        <Check size={18} className="dashboard-icon" />
+        <span className="dashboard-value">{completed}</span>
         <span className="dashboard-label">Completed</span>
       </div>
-      <div className="dashboard-stat">
+      <div className="dashboard-card">
         <span className="dashboard-value">{pct}%</span>
         <span className="dashboard-label">Complete</span>
       </div>

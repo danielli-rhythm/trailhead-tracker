@@ -4,6 +4,7 @@ import { useTrailhead } from '../hooks/useTrailhead';
 import { trailheadClient } from '../api/trailheadClient';
 import StatusBadge from './StatusBadge';
 import ConfirmDialog from './ConfirmDialog';
+import { Pencil, Trash, ChevronRight } from './Icon';
 
 export default function ItemRow({ item }) {
   const { dispatch } = useTrailhead();
@@ -21,25 +22,33 @@ export default function ItemRow({ item }) {
 
   return (
     <>
-      <tr className="item-row">
-        <td>{item.name}</td>
-        <td>{item.type}</td>
-        <td><StatusBadge status={item.status} /></td>
-        <td>{item.priority || '—'}</td>
-        <td>
-          <Link to={`/edit/${item.id}`}>Edit</Link>
-          {' '}
-          <button className="btn-danger-sm" onClick={() => setConfirming(true)}>Delete</button>
-        </td>
-      </tr>
+      <div className="item-card">
+        <div className="item-card-body">
+          <div className="item-card-name">{item.name}</div>
+          <div className="item-card-meta">
+            <span>{item.type}</span>
+            <StatusBadge status={item.status} />
+            {item.priority && <span>P{item.priority}</span>}
+          </div>
+        </div>
+        <div className="item-card-actions">
+          <Link to={`/edit/${item.id}`} className="btn-icon" aria-label="Edit">
+            <Pencil size={14} />
+          </Link>
+          <button className="btn-icon danger" onClick={() => setConfirming(true)} aria-label="Delete">
+            <Trash size={14} />
+          </button>
+        </div>
+        <div className="item-card-chevron">
+          <ChevronRight size={14} />
+        </div>
+      </div>
       {confirming && (
-        <tr><td colSpan={5}>
-          <ConfirmDialog
-            message={`Delete "${item.name}"?`}
-            onConfirm={handleDelete}
-            onCancel={() => setConfirming(false)}
-          />
-        </td></tr>
+        <ConfirmDialog
+          message={`Delete "${item.name}"?`}
+          onConfirm={handleDelete}
+          onCancel={() => setConfirming(false)}
+        />
       )}
     </>
   );

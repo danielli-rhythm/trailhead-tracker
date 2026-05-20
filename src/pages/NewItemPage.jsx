@@ -19,7 +19,7 @@ export default function NewItemPage() {
 
   return (
     <div>
-      <h2>New Item</h2>
+      <h2 className="page-heading">New Item</h2>
       <ItemForm onSubmit={handleSubmit} submitLabel="Create" />
     </div>
   );
