@@ -1,3 +1,150 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Trailhead Tracker backend — API Gateway + Lambda + DynamoDB
+
+Globals:
+  Function:
+    Runtime: nodejs22.x
+    Timeout: 10
+    MemorySize: 128
+    Environment:
+      Variables:
+        TABLE_NAME: !Ref TrailheadItemsTable
+    Tags:
+      Project: trailhead-tracker
+      ManagedBy: kiro
+      Owner: danielli
+
+Resources:
+  # DynamoDB Table
+  TrailheadItemsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: trailhead-items-danielli
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      Tags:
+        - Key: Project
+          Value: trailhead-tracker
+        - Key: ManagedBy
+          Value: kiro
+        - Key: Owner
+          Value: danielli
+
+  # HTTP API
+  HttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: $default
+      CorsConfiguration:
+        AllowOrigins:
+          - https://main.d3qejtd8lgm2os.amplifyapp.com
+          - http://localhost:3000
+        AllowMethods:
+          - GET
+          - POST
+          - PATCH
+          - DELETE
+          - OPTIONS
+        AllowHeaders:
+          - Content-Type
+      Tags:
+        Project: trailhead-tracker
+        ManagedBy: kiro
+        Owner: danielli
+
+  # Lambda Functions
+  ListItemsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/listItems.handler
+      CodeUri: .
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref TrailheadItemsTable
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /items
+            Method: GET
+
+  GetItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/getItem.handler
+      CodeUri: .
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref TrailheadItemsTable
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /items/{id}
+            Method: GET
+
+  CreateItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/createItem.handler
+      CodeUri: .
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TrailheadItemsTable
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /items
+            Method: POST
+
+  UpdateItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/updateItem.handler
+      CodeUri: .
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TrailheadItemsTable
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /items/{id}
+            Method: PATCH
+
+  DeleteItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/deleteItem.handler
+      CodeUri: .
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TrailheadItemsTable
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /items/{id}
+            Method: DELETE
+
+Outputs:
+  ApiUrl:
+    Description: HTTP API invoke URL
+    Value: !Sub "https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com"
+  TableName:
+    Description: DynamoDB table name
+    Value: !Ref TrailheadItemsTable
